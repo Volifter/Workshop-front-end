@@ -1,0 +1,20 @@
+body {
+    margin-top: 70px;
+    font-family: "Helvetica Neue";
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    display: flex;
+    background: #aaf;
+}
+
+nav > .item {
+    /* Add code here */
+}
+
+/* And continue here */

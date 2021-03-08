@@ -1,0 +1,129 @@
+name: Automated tests
+
+on: [ push, pull_request ]
+
+env:
+  SUMMARY_PATH: .github/.tests/
+  SUMMARY_FILE: summary.json
+
+jobs:
+  ex01:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: "Run tests: <head> section"
+        run: |
+          true
+          cd .github/.tests
+          npm i > /dev/null 2> /dev/null
+          node . --testsuite-1
+
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: summary
+          path: ${{ env.SUMMARY_PATH }}${{ env.SUMMARY_FILE }}
+
+  ex02:
+    needs: ex01
+    if: always()
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: summary
+          path: ${{ env.SUMMARY_PATH }}
+
+      - name: "Run tests: Nav menu"
+        run: |
+          true
+          cd .github/.tests
+          npm i > /dev/null 2> /dev/null
+          node . --testsuite-2
+
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: summary
+          path: ${{ env.SUMMARY_PATH }}${{ env.SUMMARY_FILE }}
+
+  ex03:
+    needs: ex02
+    if: always()
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: summary
+          path: ${{ env.SUMMARY_PATH }}
+
+      - name: "Run tests: Main container"
+        run: |
+          true
+          cd .github/.tests
+          npm i > /dev/null 2> /dev/null
+          node . --testsuite-3
+
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: summary
+          path: ${{ env.SUMMARY_PATH }}${{ env.SUMMARY_FILE }}
+
+  ex04:
+    needs: ex03
+    if: always()
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: summary
+          path: ${{ env.SUMMARY_PATH }}
+
+      - name: "Run tests: JavaScript"
+        run: |
+          true
+          cd .github/.tests
+          npm i > /dev/null 2> /dev/null
+          node . --testsuite-4
+
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: summary
+          path: ${{ env.SUMMARY_PATH }}${{ env.SUMMARY_FILE }}
+
+  summary:
+    needs: ex04
+    if: always()
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: summary
+          path: ${{ env.SUMMARY_PATH }}
+
+      - name: Tests summary
+        run: |
+          true
+          cd .github/.tests
+          npm i > /dev/null 2> /dev/null
+          node . -- --summary

@@ -1,0 +1,12 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "author": "Volifter",
+  "license": "ISC",
+  "dependencies": {
+    "jsdom": "^16.4.0",
+    "parse-color": "^1.0.0"
+  }
+}
